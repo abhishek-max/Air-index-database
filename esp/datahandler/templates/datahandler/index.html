@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-rCA2D+D9QXuP2TomtQwd+uP50EHjpafN+wruul0sXZzX/Da7Txn4tB9aLMZV4DZm" crossorigin="anonymous">
+    <title>IAPCD</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type = "text/JavaScript">
+         <!--
+            AutoRefresh = ( t ) => {
+               setTimeout("location.reload(true);", t);
+            }
+         //-->
+    </script>
+</head>
+
+<body onload = "JavaScript:AutoRefresh(5000)">
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex justify-content-center">
+      <h3 class="expand-lg text-center m-0 p-0">Indoor Air Pollution Controlling Device</h3>
+    </nav>
+  </header>
+
+  <main class="mx-auto m-5">
+
+  <section class="d-flex justify-content-center">
+  <div class="d-flex align-self-center card text-white bg-warning mb-3" style="max-width: 25rem;">
+    <div class="card-body">
+    <h4 class="text-center card-title">Dust Particle Count </h4>
+    <h3 class="text-center card-text">{{recent.status}} μ/m³</h3>
+    </div>
+  </div>
+  </section>
+
+<section class="mx-auto d-flex justify-content-center">
+
+    <button id="btnOn" type="button" class="m-4 p-3 btn btn-success">On</button>
+
+    <button id="btnOff" type="button" class="m-4 p-3 btn btn-danger">Off</button>
+
+</section>
+
+
+
+    <section class="d-flex justify-content-center">
+      <table class="text-center table table-hover" style="width:80%">
+
+        <thead>
+          <tr>
+            <th scope="col">Time</th>
+            <th scope="col">Data</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for data in alldata%}
+          <tr class="table-success">
+            <td>{{data.pub_date}}</td>
+            <td>{{data.status}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+
+      </table>
+    </section>
+
+
+  </main>
+</body>
+
+<script>
+const Url = 'http://localhost:8000/datahandler/switch/';
+const dataOn = {
+  condition: 'on'
+}
+const dataOff = {
+  condition: 'off'
+}
+
+$('#btnOn').click(function(){
+  $.post(Url,dataOn,function(data,status){
+    console.log("Relay ON");
+  });
+});
+
+$('#btnOff').click(function(){
+  $.post(Url,dataOff,function(data,status){
+    console.log("Relay Off");
+  });
+});
+</script>
+
+</html>

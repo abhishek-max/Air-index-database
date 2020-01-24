@@ -1,0 +1,29 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>data set</title>
+</head>
+<body>
+
+
+
+<h1>All Data</h1>
+<table border="1" width="600">
+<tr>
+Value : </tr>
+<td>{{ recent.status }}</td>
+
+<tr>
+<td>Data</td>
+<td>Time</td>
+</tr>
+
+{% for data in alldata %}
+<td>{{ data.status }}</td>
+<td>
+{{ data.pub_date }}</td>
+</tr>
+{% endfor %}
+</table>
+</body>
+</html>
